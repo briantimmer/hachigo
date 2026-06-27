@@ -37,6 +37,10 @@ type Config struct {
 	InstagramUser    string   `yaml:"instagram_user"`
 	MediumUser       string   `yaml:"medium_user"`
 	GoodreadsUser    string   `yaml:"goodreads_user"`
+	GithubUser       string   `yaml:"github_user"`
+	GithubRepoCount  int      `yaml:"github_repo_count"`
+	GithubShowProfileLink bool `yaml:"github_show_profile_link"`
+	GithubSkipForks  bool     `yaml:"github_skip_forks"`
 }
 
 // Load reads and parses the configuration file at the given path
@@ -57,6 +61,8 @@ func Load(path string) (*Config, error) {
 		ExcerptLink:      "Read on &rarr;",
 		ExcerptSeparator: "<!--more-->",
 		Titlecase:        true,
+		GithubShowProfileLink: true,
+		GithubSkipForks:  true,
 	}
 
 	if err := yaml.Unmarshal(data, cfg); err != nil {
@@ -98,5 +104,9 @@ func (c *Config) ToMap() map[string]interface{} {
 		"instagram_user":    c.InstagramUser,
 		"medium_user":       c.MediumUser,
 		"goodreads_user":    c.GoodreadsUser,
+		"github_user":       c.GithubUser,
+		"github_repo_count":  c.GithubRepoCount,
+		"github_show_profile_link": c.GithubShowProfileLink,
+		"github_skip_forks":  c.GithubSkipForks,
 	}
 }
