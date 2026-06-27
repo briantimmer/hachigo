@@ -59,7 +59,13 @@ function addSidebarToggler() {
 
 function testFeatures() {
   const html = document.documentElement;
-  if (typeof Modernizr !== 'undefined' && Modernizr.testAllProps('maskImage')) {
+  const style = document.createElement('div').style;
+  const hasMaskImage = 'maskImage' in style || 
+                       'webkitMaskImage' in style || 
+                       'MozMaskImage' in style || 
+                       'msMaskImage' in style || 
+                       'OMaskImage' in style;
+  if (hasMaskImage) {
     html.classList.add('maskImage');
   } else {
     html.classList.add('no-maskImage');
