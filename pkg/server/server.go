@@ -2,8 +2,8 @@ package server
 
 import (
 	"fmt"
-	"hachigo/pkg/config"
-	"hachigo/pkg/site"
+	"github.com/briantimmer/hachigo/pkg/config"
+	"github.com/briantimmer/hachigo/pkg/site"
 	"net/http"
 	"os"
 	"path/filepath"

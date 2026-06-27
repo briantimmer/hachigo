@@ -7,9 +7,9 @@ import (
 	"strings"
 	"time"
 
-	"hachigo/pkg/config"
-	"hachigo/pkg/server"
-	"hachigo/pkg/site"
+	"github.com/briantimmer/hachigo/pkg/config"
+	"github.com/briantimmer/hachigo/pkg/server"
+	"github.com/briantimmer/hachigo/pkg/site"
 
 	"github.com/spf13/cobra"
 )
