@@ -57,6 +57,15 @@ github_show_profile_link: true
 # X/Twitter
 x_user: 
 
+# Instagram
+instagram_user: 
+
+# Medium
+medium_user: 
+
+# Goodreads
+goodreads_user: 
+
 # Disqus Comments
 disqus_short_name: 
 disqus_show_comment_count: true
