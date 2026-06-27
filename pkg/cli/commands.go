@@ -37,6 +37,7 @@ func Execute() {
 	rootCmd.AddCommand(buildCmd())
 	rootCmd.AddCommand(serveCmd())
 	rootCmd.AddCommand(newCmd())
+	rootCmd.AddCommand(initCmd())
 
 	if err := rootCmd.Execute(); err != nil {
 		fmt.Println(err)
@@ -242,4 +243,32 @@ func sanitizeSlug(title string) string {
 		res = strings.ReplaceAll(res, "--", "-")
 	}
 	return strings.Trim(res, "-")
+}
+
+func initCmd() *cobra.Command {
+	return &cobra.Command{
+		Use:   "init [directory]",
+		Short: "Initialize a new static site",
+		Long:  `Initialize a new static site structure (config.yml, source folders, default Octopress-based templates, and stylesheets) in the target directory.`,
+		Args:  cobra.MaximumNArgs(1),
+		Run: func(cmd *cobra.Command, args []string) {
+			targetDir := "."
+			if len(args) > 0 {
+				targetDir = args[0]
+			}
+
+			fmt.Printf("Initializing new Hachigo static site in: %s...\n", targetDir)
+			if err := site.InitNewSite(targetDir); err != nil {
+				fmt.Printf("Error initializing site: %v\n", err)
+				os.Exit(1)
+			}
+			fmt.Println("New Hachigo static site successfully initialized!")
+			fmt.Println("\nTo build and preview your new site:")
+			if targetDir != "." {
+				fmt.Printf("  cd %s\n", targetDir)
+			}
+			fmt.Println("  hachigo build")
+			fmt.Println("  hachigo serve")
+		},
+	}
 }
