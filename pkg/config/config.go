@@ -33,6 +33,7 @@ type Config struct {
 	ExcerptSeparator string   `yaml:"excerpt_separator"`
 	Titlecase        bool     `yaml:"titlecase"`
 	DefaultAsides    []string `yaml:"default_asides"`
+	CopyrightYear    int      `yaml:"copyright_year"`
 }
 
 // Load reads and parses the configuration file at the given path
@@ -90,5 +91,6 @@ func (c *Config) ToMap() map[string]interface{} {
 		"excerpt_separator": c.ExcerptSeparator,
 		"titlecase":         c.Titlecase,
 		"default_asides":    c.DefaultAsides,
+		"copyright_year":    c.CopyrightYear,
 	}
 }
