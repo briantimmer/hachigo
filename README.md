@@ -15,19 +15,26 @@ It enables lightning-fast compilation of classic layouts, includes, date-slug po
 
 ---
 
-## Installation & Setup
+## Installation
 
-Build the binary directly from the source:
+The easiest way to install and update Hachigo globally is using the Go toolchain:
 
 ```bash
-cd hachigo
-go build -o hachigo ./cmd/hachigo
+go install github.com/briantimmer/hachigo/cmd/hachigo@latest
 ```
 
-To use it globally, move the compiled binary to your system's execution path:
+### Keeping it updated
+To get the latest bugfixes and features, simply re-run:
+```bash
+go install github.com/briantimmer/hachigo/cmd/hachigo@latest
+```
+
+### Shell Path Setup
+If the `hachigo` command is not recognized after running the installation, make sure Go's binary directory is added to your shell's `$PATH` variable:
 
 ```bash
-mv hachigo /usr/local/bin/
+# Add Go binary path to Zsh profile (macOS default):
+echo 'export PATH=$PATH:$(go env GOPATH)/bin' >> ~/.zshrc && source ~/.zshrc
 ```
 
 ---
