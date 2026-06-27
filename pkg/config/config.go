@@ -34,6 +34,9 @@ type Config struct {
 	Titlecase        bool     `yaml:"titlecase"`
 	DefaultAsides    []string `yaml:"default_asides"`
 	CopyrightYear    int      `yaml:"copyright_year"`
+	InstagramUser    string   `yaml:"instagram_user"`
+	MediumUser       string   `yaml:"medium_user"`
+	GoodreadsUser    string   `yaml:"goodreads_user"`
 }
 
 // Load reads and parses the configuration file at the given path
@@ -92,5 +95,8 @@ func (c *Config) ToMap() map[string]interface{} {
 		"titlecase":         c.Titlecase,
 		"default_asides":    c.DefaultAsides,
 		"copyright_year":    c.CopyrightYear,
+		"instagram_user":    c.InstagramUser,
+		"medium_user":       c.MediumUser,
+		"goodreads_user":    c.GoodreadsUser,
 	}
 }
