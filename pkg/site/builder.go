@@ -107,6 +107,38 @@ func Build(cfg *config.Config) error {
 	}
 	siteMap["categories"] = categoriesMap
 
+	// Build sorted category list for stable sidebar display
+	var categoryNames []string
+	for cat := range categoriesMap {
+		categoryNames = append(categoryNames, cat)
+	}
+	sort.Strings(categoryNames)
+
+	categoryList := make([]map[string]interface{}, len(categoryNames))
+	for i, cat := range categoryNames {
+		// Generate url-safe slug (lowercase, spaces to hyphens, alphanumeric only)
+		slug := strings.ToLower(cat)
+		slug = strings.ReplaceAll(slug, " ", "-")
+		var b strings.Builder
+		for _, r := range slug {
+			if (r >= 'a' && r <= 'z') || (r >= '0' && r <= '9') || r == '-' {
+				b.WriteRune(r)
+			}
+		}
+		cleanSlug := b.String()
+		for strings.Contains(cleanSlug, "--") {
+			cleanSlug = strings.ReplaceAll(cleanSlug, "--", "-")
+		}
+		cleanSlug = strings.Trim(cleanSlug, "-")
+
+		categoryList[i] = map[string]interface{}{
+			"name": cat,
+			"slug": cleanSlug,
+			"size": len(categoriesMap[cat]),
+		}
+	}
+	siteMap["category_list"] = categoryList
+
 	// Render Posts and Write to Files
 	fmt.Printf("Rendering %d posts...\n", len(posts))
 	for i, p := range posts {
