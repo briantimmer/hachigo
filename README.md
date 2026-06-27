@@ -36,7 +36,15 @@ mv hachigo /usr/local/bin/
 
 Hachigo provides a simple, modern CLI based on Cobra.
 
-### 1. Build the Site
+### 1. Initialize a New Site
+Initializes a new directory with the default Hachigo site structure, templates, stylesheets, and initial placeholder content (an about page and a welcome hello-world post).
+
+```bash
+hachigo init [directory]
+```
+If directory is omitted, it will initialize in the current directory.
+
+### 2. Build the Site
 Generates layouts, posts, pages, categories, and copies static assets to the target output directory (defaults to `public/`).
 
 ```bash
@@ -45,7 +53,7 @@ hachigo build [flags]
 **Flags:**
 - `-c, --config string`: Path to the configuration file (default: `config.yml` with fallback to `_config.yml`).
 
-### 2. Local Preview Server
+### 3. Local Preview Server
 Launch a local development server to serve the generated site. If `-w` or `--watch` is specified, it will monitor your files and rebuild automatically on change.
 
 ```bash
@@ -55,7 +63,7 @@ hachigo serve [flags]
 - `-p, --port string`: Port to serve the site on (default: `"4000"`).
 - `-w, --watch`: Enable file watcher and hot rebuilds on change (default: `true`).
 
-### 3. Generate a New Post
+### 4. Generate a New Post
 Creates a new post file in the `source/_posts/` directory with standardized `.md` extension and default YAML frontmatter.
 
 ```bash
@@ -63,7 +71,7 @@ hachigo new post "My Awesome Go Journey"
 ```
 *Outputs: `source/_posts/2026-06-27-my-awesome-go-journey.md`*
 
-### 4. Generate a New Page
+### 5. Generate a New Page
 Creates a new subfolder and an index page with default YAML frontmatter.
 
 ```bash
