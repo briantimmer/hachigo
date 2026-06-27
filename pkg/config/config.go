@@ -41,6 +41,7 @@ type Config struct {
 	GithubRepoCount  int      `yaml:"github_repo_count"`
 	GithubShowProfileLink bool `yaml:"github_show_profile_link"`
 	GithubSkipForks  bool     `yaml:"github_skip_forks"`
+	XUser            string   `yaml:"x_user"`
 }
 
 // Load reads and parses the configuration file at the given path
@@ -74,7 +75,7 @@ func Load(path string) (*Config, error) {
 
 // ToMap converts the config to a map suitable for Liquid template context
 func (c *Config) ToMap() map[string]interface{} {
-	return map[string]interface{}{
+	m := map[string]interface{}{
 		"url":               c.URL,
 		"title":             c.Title,
 		"subtitle":          c.Subtitle,
@@ -100,13 +101,29 @@ func (c *Config) ToMap() map[string]interface{} {
 		"excerpt_separator": c.ExcerptSeparator,
 		"titlecase":         c.Titlecase,
 		"default_asides":    c.DefaultAsides,
-		"copyright_year":    c.CopyrightYear,
-		"instagram_user":    c.InstagramUser,
-		"medium_user":       c.MediumUser,
-		"goodreads_user":    c.GoodreadsUser,
-		"github_user":       c.GithubUser,
-		"github_repo_count":  c.GithubRepoCount,
-		"github_show_profile_link": c.GithubShowProfileLink,
-		"github_skip_forks":  c.GithubSkipForks,
 	}
+
+	if c.CopyrightYear > 0 {
+		m["copyright_year"] = c.CopyrightYear
+	}
+	if c.InstagramUser != "" {
+		m["instagram_user"] = c.InstagramUser
+	}
+	if c.MediumUser != "" {
+		m["medium_user"] = c.MediumUser
+	}
+	if c.GoodreadsUser != "" {
+		m["goodreads_user"] = c.GoodreadsUser
+	}
+	if c.GithubUser != "" {
+		m["github_user"] = c.GithubUser
+		m["github_repo_count"] = c.GithubRepoCount
+		m["github_show_profile_link"] = c.GithubShowProfileLink
+		m["github_skip_forks"] = c.GithubSkipForks
+	}
+	if c.XUser != "" {
+		m["x_user"] = c.XUser
+	}
+
+	return m
 }
