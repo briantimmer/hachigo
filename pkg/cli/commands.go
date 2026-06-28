@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"runtime/debug"
 	"strings"
 	"time"
 
@@ -23,9 +24,10 @@ var (
 // Execute runs the root command
 func Execute() {
 	rootCmd := &cobra.Command{
-		Use:   "hachigo",
-		Short: "Hachigo is a fast static blog generator built on Go",
-		Long:  `Hachigo is a reverse-engineered port of Octopress in Go, enabling high-performance compilation of legacy layouts, includes, posts, and assets.`,
+		Use:     "hachigo",
+		Short:   "Hachigo is a fast static blog generator built on Go",
+		Long:    `Hachigo is a reverse-engineered port of Octopress in Go, enabling high-performance compilation of legacy layouts, includes, posts, and assets.`,
+		Version: getVersion(),
 		PersistentPreRun: func(cmd *cobra.Command, args []string) {
 			configFile = resolveConfigFile(configFile)
 		},
@@ -271,4 +273,12 @@ func initCmd() *cobra.Command {
 			fmt.Println("  hachigo serve")
 		},
 	}
+}
+
+func getVersion() string {
+	info, ok := debug.ReadBuildInfo()
+	if ok && info.Main.Version != "" {
+		return info.Main.Version
+	}
+	return "development"
 }
