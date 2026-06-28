@@ -42,6 +42,23 @@ type Config struct {
 	GithubShowProfileLink bool `yaml:"github_show_profile_link"`
 	GithubSkipForks  bool     `yaml:"github_skip_forks"`
 	XUser            string   `yaml:"x_user"`
+	Deploy           DeployConfig `yaml:"deploy"`
+}
+
+// DeployConfig holds the deployment settings for S3, GitHub Pages, and (S)FTP.
+type DeployConfig struct {
+	Type      string `yaml:"type"`      // s3, github, sftp, ftp
+	Bucket    string `yaml:"bucket"`    // s3
+	Region    string `yaml:"region"`    // s3
+	Endpoint  string `yaml:"endpoint"`  // s3 compatible
+	Path      string `yaml:"path"`      // s3
+	Repo      string `yaml:"repo"`      // github
+	Branch    string `yaml:"branch"`    // github
+	Host      string `yaml:"host"`      // sftp/ftp
+	Port      int    `yaml:"port"`      // sftp/ftp
+	User      string `yaml:"user"`      // sftp/ftp
+	KeyPath   string `yaml:"key_path"`  // sftp custom SSH key path
+	TargetDir string `yaml:"target_dir"` // sftp/ftp
 }
 
 // Load reads and parses the configuration file at the given path

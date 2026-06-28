@@ -9,6 +9,7 @@ import (
 	"time"
 
 	"github.com/briantimmer/hachigo/pkg/config"
+	"github.com/briantimmer/hachigo/pkg/deploy"
 	"github.com/briantimmer/hachigo/pkg/server"
 	"github.com/briantimmer/hachigo/pkg/site"
 
@@ -40,6 +41,7 @@ func Execute() {
 	rootCmd.AddCommand(serveCmd())
 	rootCmd.AddCommand(newCmd())
 	rootCmd.AddCommand(initCmd())
+	rootCmd.AddCommand(deployCmd())
 
 	if err := rootCmd.Execute(); err != nil {
 		fmt.Println(err)
@@ -281,4 +283,33 @@ func getVersion() string {
 		return info.Main.Version
 	}
 	return "development"
+}
+
+func deployCmd() *cobra.Command {
+	return &cobra.Command{
+		Use:   "deploy",
+		Short: "Deploy the site to the configured destination",
+		Long:  `Deploy the compiled static files to the configured target (S3 bucket, GitHub Pages, or (S)FTP server) defined in config.yml. Automatically builds the site first.`,
+		Run: func(cmd *cobra.Command, args []string) {
+			cfg, err := config.Load(configFile)
+			if err != nil {
+				fmt.Printf("Error loading config: %v\n", err)
+				os.Exit(1)
+			}
+
+			// Automatically build the site first before deploying
+			fmt.Println("Building site before deployment...")
+			if err := site.Build(cfg); err != nil {
+				fmt.Printf("Build failed: %v\n", err)
+				os.Exit(1)
+			}
+			fmt.Println("Build completed successfully!")
+
+			// Trigger deployment
+			if err := deploy.Run(cfg); err != nil {
+				fmt.Printf("Deployment failed: %v\n", err)
+				os.Exit(1)
+			}
+		},
+	}
 }

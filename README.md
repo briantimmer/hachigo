@@ -86,6 +86,15 @@ hachigo new page "about"
 ```
 *Outputs: `source/about/index.md`*
 
+### 6. Deploy the Site
+Automatically compiles the static site, then deploys it to your S3 bucket, GitHub Pages, or (S)FTP server based on the configuration in your `config.yml`.
+
+```bash
+hachigo deploy [flags]
+```
+**Flags:**
+- `-c, --config string`: Path to the configuration file (default: `config.yml`).
+
 ---
 
 ## Configuration
@@ -102,4 +111,32 @@ source: source
 destination: public
 paginate: 10
 recent_posts: 5
+
+# Deployment Configuration (uncomment the one you need)
+#
+# AWS S3 (or S3-compatible, e.g. R2, Spaces):
+# deploy:
+#   type: s3
+#   bucket: my-blog-bucket
+#   region: us-east-1
+#   endpoint: https://xxx.r2.cloudflarestorage.com  # optional for non-AWS
+#   path: /blog                                     # optional subfolder
+#
+# GitHub Pages:
+# deploy:
+#   type: github
+#   repo: git@github.com:briantimmer/briantimmer.github.io.git
+#   branch: gh-pages
+#
+# SFTP / FTP:
+# deploy:
+#   type: sftp # or ftp
+#   host: ftp.example.com
+#   port: 22   # 21 for FTP
+#   user: username
+#   target_dir: /var/www/html
+#   key_path: ~/.ssh/id_rsa  # optional (defaults to standard SSH key locations)
 ```
+
+> [!TIP]
+> To keep credentials safe, Hachigo loads SFTP/FTP passwords from the `HACHIGO_DEPLOY_PASSWORD` environment variable, and AWS/S3 credentials from standard AWS env vars (`AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`). Do not hardcode passwords or access keys in your `config.yml`.

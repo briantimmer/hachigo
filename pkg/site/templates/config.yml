@@ -74,3 +74,30 @@ disqus_show_comment_count: true
 
 # Google Analytics
 google_analytics_tracking_id: 
+
+# ----------------------- #
+#      Deploy Configs     #
+# ----------------------- #
+
+# AWS S3 (or S3-compatible, e.g. R2, Spaces):
+# deploy:
+#   type: s3
+#   bucket: my-blog-bucket
+#   region: us-east-1
+#   endpoint: https://xxx.r2.cloudflarestorage.com  # optional for non-AWS
+#   path: /blog                                     # optional subfolder
+#
+# GitHub Pages:
+# deploy:
+#   type: github
+#   repo: git@github.com:briantimmer/briantimmer.github.io.git
+#   branch: gh-pages
+#
+# SFTP / FTP:
+# deploy:
+#   type: sftp # or ftp
+#   host: ftp.example.com
+#   port: 22   # 21 for FTP
+#   user: username
+#   target_dir: /var/www/html
+#   key_path: ~/.ssh/id_rsa  # optional (defaults to standard SSH key locations) 
